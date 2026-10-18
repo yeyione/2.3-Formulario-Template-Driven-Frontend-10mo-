@@ -1,2 +1,2 @@
 
-![Formulario de Registro] (src/images/formulario.jpeg)
+![Formulario de Registro](src/images/formulario.jpeg)
