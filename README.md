@@ -1,5 +1,6 @@
 
 
-![Formulario de Registro con datos y Reultado](src/images/formulario.jpeg =400x) 
-
-![Formulario sin datos](src/images/formulariosindatos.jpeg =400x)
+<p align="center">
+  <img src="images/formulario.jpeg" alt="Formulario" width="600">
+   <img src="images/formulariosindatos.jpeg" alt="Formulario" width="600">
+</p>
