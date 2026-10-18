@@ -1,2 +1,2 @@
 
-![Formulario de Registro] (IMAGES/FormularioDeRegistros.jpeg?raw=true)
+![Formulario de Registro] (IMAGES/FormularioDeRegistro.jpeg?raw=true)
