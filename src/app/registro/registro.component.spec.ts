@@ -15,7 +15,7 @@ describe('RegistroComponent', () => {
     el = fixture.nativeElement;
     fixture.detectChanges();
     await fixture.whenStable();
-    fixture.detectChanges(); 
+    fixture.detectChanges();
   });
 
   async function escribir(id: string, valor: string) {
@@ -71,5 +71,44 @@ describe('RegistroComponent', () => {
     expect(texto).not.toContain('secreto1');
     expect(texto).toContain('xxxxxxxx');
   });
+
+    it('no muestra mensajes de error antes de interactuar', () => {
+    expect(el.querySelector('.error')).toBeNull();
+  });
+
+  it('muestra "obligatorio" al tocar el nombre y dejarlo vacío', () => {
+    const input = el.querySelector('#nombre') as HTMLInputElement;
+    input.dispatchEvent(new Event('blur'));
+    fixture.detectChanges();
+    expect(el.textContent).toContain('El nombre es obligatorio.');
+  });
+
+  it('muestra mensaje de mínimo 3 caracteres en el nombre', async () => {
+    await escribir('nombre', 'ab');
+    expect(el.textContent).toContain('El nombre debe tener al menos 3 caracteres.');
+  });
+
+  it('muestra mensaje de correo inválido', async () => {
+    await escribir('correo', 'ana@');
+    expect(el.textContent).toContain('Ingresa un correo válido.');
+  });
+
+  it('muestra mensaje de edad mínima', async () => {
+    await escribir('edad', '17');
+    expect(el.textContent).toContain('La edad mínima es 18 años.');
+  });
+
+  it('muestra mensaje de contraseña corta', async () => {
+    await escribir('password', '123');
+    expect(el.textContent).toContain('La contraseña debe tener al menos 6 caracteres.');
+  });
+
+  it('marca el campo como inválido y luego como válido', async () => {
+    await escribir('nombre', 'ab');
+    const input = el.querySelector('#nombre') as HTMLInputElement;
+    expect(input.classList).toContain('invalido');
+
+    await escribir('nombre', 'Ana Lopez');
+    expect(input.classList).toContain('valido');
+  });
 });
-  

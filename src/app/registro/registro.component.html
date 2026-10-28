@@ -3,64 +3,94 @@
 
   <form #registroForm="ngForm" (ngSubmit)="registrar()" novalidate>
 
+    <!-- NOMBRE -->
     <div class="campo">
       <label for="nombre">Nombre completo</label>
       <input id="nombre" name="nombre" type="text"
              [(ngModel)]="usuario.nombre" #nombre="ngModel"
-             required minlength="3">
-      <small class="error" *ngIf="nombre.invalid && nombre.touched">
-        El nombre es obligatorio (mínimo 3 caracteres).
-      </small>
+             required minlength="3"
+             [class.valido]="nombre.valid && (nombre.touched || nombre.dirty)"
+             [class.invalido]="nombre.invalid && (nombre.touched || nombre.dirty)">
+      <ng-container *ngIf="nombre.touched || nombre.dirty">
+        <small class="error" *ngIf="nombre.hasError('required')">El nombre es obligatorio.</small>
+        <small class="error" *ngIf="nombre.hasError('minlength')">El nombre debe tener al menos 3 caracteres.</small>
+        <small class="ok" *ngIf="nombre.valid"> Nombre correcto</small>
+      </ng-container>
     </div>
 
+    <!-- CORREO -->
     <div class="campo">
       <label for="correo">Correo electrónico</label>
       <input id="correo" name="correo" type="email"
              [(ngModel)]="usuario.correo" #correo="ngModel"
-             required email>
-      <small class="error" *ngIf="correo.invalid && correo.touched">
-        Ingresa un correo válido.
-      </small>
+             required email pattern="[^@\s]+@[^@\s]+\.[a-zA-Z]{2,}"
+             [class.valido]="correo.valid && (correo.touched || correo.dirty)"
+             [class.invalido]="correo.invalid && (correo.touched || correo.dirty)">
+      <ng-container *ngIf="correo.touched || correo.dirty">
+        <small class="error" *ngIf="correo.hasError('required')">El correo es obligatorio.</small>
+        <small class="error" *ngIf="correo.hasError('email') || correo.hasError('pattern')">Ingresa un correo válido.</small>
+        <small class="ok" *ngIf="correo.valid"> Correo correcto</small>
+      </ng-container>
     </div>
 
+    <!-- TELÉFONO -->
     <div class="campo">
       <label for="telefono">Teléfono</label>
       <input id="telefono" name="telefono" type="tel"
              [(ngModel)]="usuario.telefono" #telefono="ngModel"
-             required pattern="^[0-9]{10}$">
-      <small class="error" *ngIf="telefono.invalid && telefono.touched">
-        El teléfono debe tener 10 dígitos.
-      </small>
+             required pattern="^[0-9]{10}$"
+             [class.valido]="telefono.valid && (telefono.touched || telefono.dirty)"
+             [class.invalido]="telefono.invalid && (telefono.touched || telefono.dirty)">
+      <ng-container *ngIf="telefono.touched || telefono.dirty">
+        <small class="error" *ngIf="telefono.hasError('required')">El teléfono es obligatorio.</small>
+        <small class="error" *ngIf="telefono.hasError('pattern')">El teléfono debe tener 10 dígitos numéricos.</small>
+        <small class="ok" *ngIf="telefono.valid"> Teléfono correcto</small>
+      </ng-container>
     </div>
 
+    <!-- EDAD -->
     <div class="campo">
       <label for="edad">Edad</label>
       <input id="edad" name="edad" type="number"
              [(ngModel)]="usuario.edad" #edad="ngModel"
-             required min="18" max="120">
-      <small class="error" *ngIf="edad.invalid && edad.touched">
-        La edad debe estar entre 18 y 120.
-      </small>
+             required min="18"
+             [class.valido]="edad.valid && (edad.touched || edad.dirty)"
+             [class.invalido]="edad.invalid && (edad.touched || edad.dirty)">
+      <ng-container *ngIf="edad.touched || edad.dirty">
+        <small class="error" *ngIf="edad.hasError('required')">La edad es obligatoria.</small>
+        <small class="error" *ngIf="edad.hasError('min')">La edad mínima es 18 años.</small>
+        <small class="ok" *ngIf="edad.valid"> Edad correcta</small>
+      </ng-container>
     </div>
 
+    <!-- CONTRASEÑA -->
     <div class="campo">
       <label for="password">Contraseña</label>
       <input id="password" name="password" type="password"
              [(ngModel)]="usuario.password" #password="ngModel"
-             required minlength="6">
-      <small class="error" *ngIf="password.invalid && password.touched">
-        La contraseña debe tener al menos 6 caracteres.
-      </small>
+             required minlength="6"
+             [class.valido]="password.valid && (password.touched || password.dirty)"
+             [class.invalido]="password.invalid && (password.touched || password.dirty)">
+      <ng-container *ngIf="password.touched || password.dirty">
+        <small class="error" *ngIf="password.hasError('required')">La contraseña es obligatoria.</small>
+        <small class="error" *ngIf="password.hasError('minlength')">La contraseña debe tener al menos 6 caracteres.</small>
+        <small class="ok" *ngIf="password.valid"> Contraseña correcta</small>
+      </ng-container>
     </div>
 
+    <!-- CONFIRMAR CONTRASEÑA -->
     <div class="campo">
       <label for="confirmar">Confirmar contraseña</label>
       <input id="confirmar" name="confirmar" type="password"
              [(ngModel)]="usuario.confirmar" #confirmar="ngModel"
-             required>
-      <small class="error" *ngIf="confirmar.touched && usuario.confirmar !== usuario.password">
-        Las contraseñas no coinciden.
-      </small>
+             required
+             [class.valido]="confirmar.valid && usuario.confirmar === usuario.password && (confirmar.touched || confirmar.dirty)"
+             [class.invalido]="(confirmar.invalid || usuario.confirmar !== usuario.password) && (confirmar.touched || confirmar.dirty)">
+      <ng-container *ngIf="confirmar.touched || confirmar.dirty">
+        <small class="error" *ngIf="confirmar.hasError('required')">Debes confirmar la contraseña.</small>
+        <small class="error" *ngIf="!confirmar.hasError('required') && usuario.confirmar !== usuario.password">Las contraseñas no coinciden.</small>
+        <small class="ok" *ngIf="confirmar.valid && usuario.confirmar === usuario.password"> Las contraseñas coinciden</small>
+      </ng-container>
     </div>
 
     <button type="submit"
@@ -75,6 +105,6 @@
     <p><strong>Correo:</strong> {{ registrado.correo }}</p>
     <p><strong>Teléfono:</strong> {{ registrado.telefono }}</p>
     <p><strong>Edad:</strong> {{ registrado.edad }}</p>
-    <p><strong>Contraseña:</strong> {{'x'.repeat(registrado.password.length) }}</p>
+    <p><strong>Contraseña:</strong> {{ 'x'.repeat(registrado.password.length) }}</p>
   </div>
 </div>
