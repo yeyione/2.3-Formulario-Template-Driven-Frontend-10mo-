@@ -2,6 +2,8 @@
   <img src="https://github.com/yeyione/2.3-Formulario-Template-Driven-Frontend-10mo-/blob/main/src/images/formulario.jpeg" alt="Formulario" width="300">
    <img src="https://github.com/yeyione/2.3-Formulario-Template-Driven-Frontend-10mo-/blob/main/src/images/formulariosindatos.jpeg" alt="Formulario" width="300">
    <img src="https://github.com/yeyione/2.3-Formulario-Template-Driven-Frontend-10mo-/blob/main/src/images/Validaciones.png" alt="Formulario" width="300">
+   <img src="https://github.com/yeyione/2.3-Formulario-Template-Driven-Frontend-10mo-/blob/main/src/images/Validaciones Reactive Forms.png" alt="Formulario" width="200">
+   <img src="https://github.com/yeyione/2.3-Formulario-Template-Driven-Frontend-10mo-/blob/main/src/images/Reactive Forms correct.png" alt="Formulario" width="200">
 </p>
 
 Explicación Breve de las validaciones del formulario.

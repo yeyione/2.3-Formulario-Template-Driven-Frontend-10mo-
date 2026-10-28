@@ -1,0 +1,82 @@
+<div class="contenedor">
+  <h2>Registro de usuario - Reactive Forms</h2>
+
+  <form [formGroup]="formulario" (ngSubmit)="enviar()" novalidate>
+
+    <!-- NOMBRE -->
+    <div class="campo">
+      <label for="nombre">Nombre</label>
+      <input id="nombre" type="text" formControlName="nombre"
+             [class.valido]="nombre.valid && (nombre.touched || nombre.dirty)"
+             [class.invalido]="nombre.invalid && (nombre.touched || nombre.dirty)">
+      <ng-container *ngIf="nombre.touched || nombre.dirty">
+        <small class="error" *ngIf="nombre.hasError('required')">El nombre es obligatorio.</small>
+        <small class="error" *ngIf="nombre.hasError('minlength')">El nombre debe tener al menos 3 caracteres.</small>
+        <small class="ok" *ngIf="nombre.valid"> Nombre correcto</small>
+      </ng-container>
+    </div>
+
+    <!-- APELLIDOS -->
+    <div class="campo">
+      <label for="apellidos">Apellidos</label>
+      <input id="apellidos" type="text" formControlName="apellidos"
+             [class.valido]="apellidos.valid && (apellidos.touched || apellidos.dirty)"
+             [class.invalido]="apellidos.invalid && (apellidos.touched || apellidos.dirty)">
+      <ng-container *ngIf="apellidos.touched || apellidos.dirty">
+        <small class="error" *ngIf="apellidos.hasError('required')">Los apellidos son obligatorios.</small>
+        <small class="error" *ngIf="apellidos.hasError('minlength')">Los apellidos deben tener al menos 3 caracteres.</small>
+        <small class="ok" *ngIf="apellidos.valid">  Apellidos correctos</small>
+      </ng-container>
+    </div>
+
+    <!-- CORREO -->
+    <div class="campo">
+      <label for="correo">Correo electrónico</label>
+      <input id="correo" type="email" formControlName="correo"
+             [class.valido]="correo.valid && (correo.touched || correo.dirty)"
+             [class.invalido]="correo.invalid && (correo.touched || correo.dirty)">
+      <ng-container *ngIf="correo.touched || correo.dirty">
+        <small class="error" *ngIf="correo.hasError('required')">El correo es obligatorio.</small>
+        <small class="error" *ngIf="correo.hasError('email') || correo.hasError('pattern')">Ingresa un correo válido.</small>
+        <small class="ok" *ngIf="correo.valid"> Correo correcto</small>
+      </ng-container>
+    </div>
+
+    <!-- TELÉFONO -->
+    <div class="campo">
+      <label for="telefono">Teléfono</label>
+      <input id="telefono" type="tel" formControlName="telefono"
+             [class.valido]="telefono.valid && (telefono.touched || telefono.dirty)"
+             [class.invalido]="telefono.invalid && (telefono.touched || telefono.dirty)">
+      <ng-container *ngIf="telefono.touched || telefono.dirty">
+        <small class="error" *ngIf="telefono.hasError('required')">El teléfono es obligatorio.</small>
+        <small class="error" *ngIf="telefono.hasError('pattern')">El teléfono debe tener 10 dígitos numéricos.</small>
+        <small class="ok" *ngIf="telefono.valid"> Teléfono correcto</small>
+      </ng-container>
+    </div>
+
+    <!-- CONTRASEÑA -->
+    <div class="campo">
+      <label for="password">Contraseña</label>
+      <input id="password" type="password" formControlName="password"
+             [class.valido]="password.valid && (password.touched || password.dirty)"
+             [class.invalido]="password.invalid && (password.touched || password.dirty)">
+      <ng-container *ngIf="password.touched || password.dirty">
+        <small class="error" *ngIf="password.hasError('required')">La contraseña es obligatoria.</small>
+        <small class="error" *ngIf="password.hasError('minlength')">La contraseña debe tener al menos 6 caracteres.</small>
+        <small class="ok" *ngIf="password.valid"> Contraseña correcta</small>
+      </ng-container>
+    </div>
+
+    <button type="submit" [disabled]="formulario.invalid">Enviar</button>
+  </form>
+
+  <div class="resultado" *ngIf="registrado">
+    <h3>Datos registrados</h3>
+    <p><strong>Nombre:</strong> {{ registrado.nombre }}</p>
+    <p><strong>Apellidos:</strong> {{ registrado.apellidos }}</p>
+    <p><strong>Correo:</strong> {{ registrado.correo }}</p>
+    <p><strong>Teléfono:</strong> {{ registrado.telefono }}</p>
+    <p><strong>Contraseña:</strong> {{ 'x'.repeat(registrado.password.length) }}</p>
+  </div>
+</div>
